@@ -17,6 +17,7 @@
 
 		<app.runtime>4.3.0-20210304</app.runtime>
 		<mule.maven.plugin.version>3.4.2</mule.maven.plugin.version>
+		<mule.version>4.3.0</mule.version>
 	</properties>
 
 	<build>
@@ -32,6 +33,19 @@
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
+					<cloudHubDeployment>
+						<objectStoreV2>true</objectStoreV2>
+						<uri>https://anypoint.mulesoft.com/</uri>
+						<muleVersion>${mule.version}</muleVersion>
+						<!-- <muleVersion>4.3.0</muleVersion> -->
+						<username>rakeshjain13121990</username>
+						<password>Mulesoft@123</password>
+						<applicationName>bookmyholidays-exp-api</applicationName>
+						<environment>Sandbox</environment>
+						<workerType>MICRO</workerType>
+						<workers>1</workers>
+						<region>us-east-2</region>
+					</cloudHubDeployment>
 				</configuration>
 			</plugin>
 		</plugins>
