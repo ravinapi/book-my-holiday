@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="createFlightBookings" doc:id="d3b4d884-25c6-4224-972c-e0dcfb3fd95e" >
+		<json-logger:logger doc:name="Logger" doc:id="3a0d97f4-2039-4884-bb2d-97c487a63e0a" config-ref="JSON_Logger_Config" message="Booking Payload Received"/>
+		<set-variable value="#[payload]" doc:name="originalPayload" doc:id="fa019676-2df1-4574-a0e3-2fa9d92ad169" variableName="originalPayload"/>
+		<http:request method="POST" doc:name="createBookingDetails" doc:id="cb3c9472-e3aa-4bb8-ae93-cc6b6310784a" config-ref="HTTP_Request_configuration_flights" path="/flights" responseTimeout="${flight.timeout}" target="postResponse" >
+			<reconnect frequency="${flight.reconnectionTime}" count="${flight.reconnectionCount}" />
+			<http:body ><![CDATA[#[vars.originalPayload]]]></http:body>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"source" : vars.source,
+	"departureDate" : vars.departureDate,
+	"destination" : vars.destination
+}]]]></http:query-params>
+		</http:request>
+		<set-payload value="#[vars.postResponse]" doc:name="Set Payload" doc:id="b1822205-4f98-48d1-b118-b81f07d5f7d1" />
+		<json-logger:logger doc:name="Logger" doc:id="85641f5f-4cd0-46e7-ba0b-749ed0edb2c9" config-ref="JSON_Logger_Config" message="After Processing Booking Data">
+		</json-logger:logger>
+	</flow>
+</mule>

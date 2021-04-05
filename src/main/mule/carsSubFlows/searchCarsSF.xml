@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:car-booking-process-api="http://www.mulesoft.org/schema/mule/car-booking-process-api" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/car-booking-process-api http://www.mulesoft.org/schema/mule/car-booking-process-api/current/mule-car-booking-process-api.xsd">
+	<flow name="searchCarsSubFlow" doc:id="6e553500-4bdc-4f20-970c-d6d3aad03bef" >
+		<car-booking-process-api:get-search-cars doc:name="Get search cars" doc:id="ddd347d7-b4ea-4a23-86b6-eb841efe408a" config-ref="Car_Booking_Process_API_Config" pick-up-point="#[attributes.uriParams.pickUpPoint]" drop-point="#[attributes.uriParams.dropPoint]" date="#[attributes.uriParams.date]" time="#[attributes.uriParams.time]" client-id="${carsAPI.client_id}" client-secret="${carsAPI.client_secret}"/>
+	</flow>
+</mule>

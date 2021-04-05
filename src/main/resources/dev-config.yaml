@@ -1,0 +1,29 @@
+carsAPI:
+  host: "car-booking-proc-api.us-e2.cloudhub.io"
+  port: "80"
+  protocol: "HTTP"
+  client_id: "62f09c60451f4cd89de4e60e6ef68ede"
+  client_secret: "32bF22d78C6d4d0082F8c5d6aC6307c7"
+  basePath: "/procapi/"
+  
+hotelsAPI:
+  host: "hotel-booking-prc-app.us-e2.cloudhub.io"
+  port: "80"
+  protocol: "HTTP"
+  basePath: "/api/hotels"
+  
+flight:
+  host: "process-flight-api.us-e2.cloudhub.io"
+  port: "80"
+  timeout: "10000"
+  basePath: "/procapi"
+  reconnectionCount: "5000"
+  reconnectionTime: "3"
+  clientID: "2wM73QA7nBnvRtaOtskRo5MDA1nj9gw2SskR/NrlAWPMjKLlvkmT1A=="
+  clientSecret: "/Die3fzRj5InBQQ67wrm/hXR/m0+u25g+6iL7FLPHUCQFsHnaa09yA=="
+  
+json:
+  logger:
+    application:
+      version: "1.0.0"
+      name: "bookmyholiday-exp-api"

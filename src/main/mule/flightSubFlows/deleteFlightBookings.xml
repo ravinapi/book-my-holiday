@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="deleteFlightBookings" doc:id="edbb1059-5fe9-42aa-b467-1d631d9dd4ea" >
+		<json-logger:logger doc:name="Logger" doc:id="d7108cbc-269f-4b15-bd52-b2ee8a0ea6d1" config-ref="JSON_Logger_Config" message="Request received for booking cancellation">
+			<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+    payload: JSONLoggerModule::stringifyNonJSON(attributes) 
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<http:request method="PATCH" doc:name="Request" doc:id="d6ac44cb-ca2f-4f59-9ce0-c46697350423" config-ref="HTTP_Request_configuration_flights" responseTimeout="${flight.timeout}" path="/flights/{emailID}/{bookingID}">
+			<reconnect frequency="${flight.reconnectionTime}" count="${flight.reconnectionCount}" />
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"bookingID" : attributes.uriParams.bookingID,
+	"emailID" : attributes.uriParams.emailID
+}]]]></http:uri-params>
+		</http:request>
+		<json-logger:logger doc:name="Logger" doc:id="e71563db-6086-476e-90e1-ae902c64ea2d" config-ref="JSON_Logger_Config" message="Response for booking cancellation"/>
+	</flow>
+</mule>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="getHotelsSub_Flow" doc:id="d665917b-37df-4421-8e2e-18117c17ad49" >
+		<set-variable value="#[message.attributes.queryParams.hotelID]" doc:name="Set Variable" doc:id="2dbe14da-c80f-46aa-a747-10ccdf70d0bf" variableName="hotelID"/>
+		<choice doc:name="Choice" doc:id="c5815ccf-3abc-4e64-9ef9-3f224db1e461" >
+			<when expression="#[vars.hotelID != null]">
+				<http:request method="GET" doc:name="Request" doc:id="6dea43e0-7e16-42e3-b350-7dd3f9afcc67" config-ref="HTTP_Request_configuration_hotels" path="/{city}">
+					<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"city" : attributes.uriParams.city
+}]]]></http:uri-params>
+					<http:query-params><![CDATA[#[output application/java
+---
+{
+	"checkInDate" : attributes.queryParams.checkInDate,
+	"checkOutDate" : attributes.queryParams.checkOutDate,
+	"noOfRoomsRequired" : attributes.queryParams.noOfRoomsRequired,
+	"noOfGuests" : attributes.queryParams.noOfGuests,
+	"hotelID" : attributes.queryParams.hotelID
+}]]]></http:query-params>
+				</http:request>
+			</when>
+			<otherwise>
+				<http:request method="GET" doc:name="Request" doc:id="be6c61fb-332c-439c-bdbc-3bcf7e0b9f05" config-ref="HTTP_Request_configuration_hotels" path="/{city}">
+			<http:uri-params><![CDATA[#[output application/java
+---
+{
+	"city" : attributes.uriParams.city
+}]]]></http:uri-params>
+			<http:query-params><![CDATA[#[output application/java
+---
+{
+	"checkInDate" : attributes.queryParams.checkInDate,
+	"checkOutDate" : attributes.queryParams.checkOutDate,
+	"noOfRoomsRequired" : attributes.queryParams.noOfRoomsRequired,
+	"noOfGuests" : attributes.queryParams.noOfGuests
+}]]]></http:query-params>
+		</http:request>
+			</otherwise>
+		</choice>
+		<ee:transform doc:name="Transform Message" doc:id="37a1d7e4-25fb-44e3-a826-54a05a221ade" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

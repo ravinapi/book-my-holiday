@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="searchCars" doc:id="c501ac97-7090-4c58-a4e1-7bad17e14adc" >
+		<logger level="INFO" doc:name="reqLogger" doc:id="b7d64177-dbd3-432e-92a2-66339f9e243d" message="#[payload]"/>
+		<flow-ref doc:name="searchCarsSubFlow" doc:id="26c3d2a6-3308-4db0-b1c2-ab3a8e148013" name="searchCarsSubFlow"/>
+		<logger level="INFO" doc:name="respLogger" doc:id="174cf3d1-4577-47cb-8cc0-13c135427ae3" message="#[payload]"/>
+	</flow>
+	<flow name="createCarBooking" doc:id="e8c310a3-6150-447d-8800-3fd0c1cfbd37" >
+		<logger level="INFO" doc:name="reqLogger" doc:id="e6a4c46f-fbdf-4cc4-835d-b030a8fd2254" message="#[payload]"/>
+		<flow-ref doc:name="createCarBookingSF" doc:id="a947a366-b547-41e8-a941-8a86948a3fd3" name="createCarBookingSF"/>
+		<logger level="INFO" doc:name="respLogger" doc:id="ed7319cd-96fa-4ade-8a52-937270556726" message="#[payload]"/>
+	</flow>
+	<flow name="updateCarBooking" doc:id="31e68679-0905-4f53-b9e0-4e54dd290062" >
+		<logger level="INFO" doc:name="reqLogger" doc:id="ec867d19-279e-4760-9e2c-aa074e3796a2" message="#[payload]"/>
+		<flow-ref doc:name="updateCarBookingSF" doc:id="820694da-e50d-4361-a6aa-db30fc10e019" name="updateCarBookingSF"/>
+		<logger level="INFO" doc:name="respLogger" doc:id="ad89b016-66f7-4f76-ac64-cefd810158d9" message="#[payload]"/>
+	</flow>
+	<flow name="deleteCarBooking" doc:id="f1e26813-7a38-4c46-8966-3139e55e5182" >
+		<logger level="INFO" doc:name="reqLogger" doc:id="6c77c244-781b-4a18-8183-8a6e8e300281" message="#[payload]"/>
+		<flow-ref doc:name="deleteCarBookingSF" doc:id="ae098ba8-d7dd-49df-a09f-0c876b572818" name="deleteCarBookingSF"/>
+		<logger level="INFO" doc:name="respLogger" doc:id="5413d0cb-338e-41b9-bea6-554fe0ccd113" message="#[payload]"/>
+	</flow>
+	<flow name="getCarBookingById" doc:id="8c94f39e-65fa-4c35-be31-c21e083fa89d" >
+		<logger level="INFO" doc:name="reqLogger" doc:id="622041d2-659f-4baa-b22e-3337f4ee504e" message="#[payload]"/>
+		<flow-ref doc:name="getCarBookingByIdSF" doc:id="ee145fef-f21d-45bb-a4dd-8f346bca5198" name="getCarBookingByIdSF"/>
+		<logger level="INFO" doc:name="respLogger" doc:id="751dcef0-7b55-4419-94f8-1d575aed6f04" message="#[payload]"/>
+	</flow>
+	<flow name="getCarBookingsByEmail" doc:id="a2048447-ac0b-47fc-89a8-03b064f1073d" >
+		<logger level="INFO" doc:name="reqLogger" doc:id="30f179b1-5ec6-4219-98f4-75a661c64c9f" message="#[payload]"/>
+		<flow-ref doc:name="getCarBookingsByEmailSF" doc:id="6c959a6d-e8e3-43d2-bc2e-9f5c99070fbd" name="getCarBookingsByEmailSF"/>
+		<logger level="INFO" doc:name="respLogger" doc:id="f10b7888-b07e-4793-abad-8a82aa3e0d00" message="#[payload]"/>
+	</flow>
+	<flow name="getHotels" doc:id="b62a4444-fb93-4502-a1b8-49260cacc99c" >
+		<logger level="INFO" doc:name="Logger" doc:id="280fbe91-53a2-42a0-9627-a5855e647188" />
+		<flow-ref doc:name="Flow Reference" doc:id="7175e492-1f23-4ecb-9fba-6ea9d4741e73" name="getHotelsSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a6b123d4-bb5f-4d66-be77-3bb8effec768" />
+	</flow>
+	<flow name="bookHotel" doc:id="7182b8e6-4aca-4b81-b6a8-d7e612139b5a" >
+		<logger level="INFO" doc:name="Logger" doc:id="aa374f3a-99c5-4401-8c37-fb1fa0d8c74f" />
+		<flow-ref doc:name="Flow Reference" doc:id="cc2c9c81-a6c6-4e5d-b10b-ddcd92529566" name="bookHotelSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="5693e5e8-9b02-46be-ab9e-e4bccfa92771" />
+	</flow>
+	<flow name="listAllHotelBookings" doc:id="9317be6d-a5f1-4464-a51d-df2122642c04" >
+		<logger level="INFO" doc:name="Logger" doc:id="e8de811b-b4d2-4ddd-8fe7-f25629f41fb4" />
+		<flow-ref doc:name="Flow Reference" doc:id="1dfaa323-1194-465f-8cd3-4f4d56db4c78" name="listAllHotelBookingsSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d132eb03-b54b-4592-be52-2c83a635f48f" />
+	</flow>
+	<flow name="listHotelBooking" doc:id="b101041d-6fd4-4858-ae42-59746d18add9" >
+		<logger level="INFO" doc:name="Logger" doc:id="050b320d-90eb-477f-bbc8-5f2e29acc8b1" />
+		<flow-ref doc:name="Flow Reference" doc:id="e785e5bb-097c-4ed0-95be-89525f645f66" name="listHotelBookingSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="a1a65ee7-2a3d-48d8-95e6-bfcbf46b36ab" />
+	</flow>
+	<flow name="updateHotelBooking" doc:id="cf492f17-45ca-427c-8e10-3cbe8572acf5" >
+		<logger level="INFO" doc:name="Logger" doc:id="69d607c4-feeb-4401-9ff3-86d920be2c0d" />
+		<flow-ref doc:name="Flow Reference" doc:id="0cce2048-b2bf-4928-8a60-08e40d2f576d" name="updateHotelBookingSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="e4d67eb6-35a7-4941-b4c2-309992ae6708" />
+	</flow>
+	<flow name="cancelHotelBooking" doc:id="6f2c66eb-a676-4040-8911-e276c9492545" >
+		<logger level="INFO" doc:name="Logger" doc:id="c7bef666-c626-4289-b9e9-b178c35218fe" />
+		<flow-ref doc:name="Flow Reference" doc:id="2b6f0ecf-e220-47a3-beb8-25631cea9891" name="cancelHotelBookingSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="01266951-3988-49ea-9bfb-605fd2cdd928" />
+	</flow>
+</mule>

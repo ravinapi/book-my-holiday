@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<flow name="getAllFlights" doc:id="99c9f707-0806-4f2a-8fea-ca6a72640e57" >
+		<json-logger:logger doc:name="Logger" doc:id="4545a5ff-7f27-4efe-92db-4aa3c810a343" config-ref="JSON_Logger_Config" message="Request received to get all the user bookings based on emailid" >
+			<json-logger:content ><![CDATA[#[import modules::JSONLoggerModule output application/json ---
+{
+    payload: JSONLoggerModule::stringifyNonJSON(attributes) 
+}]]]></json-logger:content>
+		</json-logger:logger>
+		<http:request method="GET" doc:name="Request" doc:id="545ea020-3f17-4737-9dfd-a5946994aae4" config-ref="HTTP_Request_configuration_flights" path="/flights" responseTimeout="${flight.timeout}" >
+			<reconnect frequency="${flight.reconnectionTime}" count="${flight.reconnectionCount}" />
+		</http:request>
+		<json-logger:logger doc:name="Logger" doc:id="fadb1059-e88b-4d54-9f2c-3a15e1e84fa5" config-ref="JSON_Logger_Config" message="Response received for the user bookings" />
+	</flow>
+</mule>

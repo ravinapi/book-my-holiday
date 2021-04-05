@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json-logger="http://www.mulesoft.org/schema/mule/json-logger"
+	xmlns:car-booking-process-api="http://www.mulesoft.org/schema/mule/car-booking-process-api"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd 
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/car-booking-process-api http://www.mulesoft.org/schema/mule/car-booking-process-api/current/mule-car-booking-process-api.xsd
+http://www.mulesoft.org/schema/mule/json-logger http://www.mulesoft.org/schema/mule/json-logger/current/mule-json-logger.xsd">
+	<http:listener-config name="book-my-holidays-exp-api-httpListenerConfig">
+        <http:listener-connection host="0.0.0.0" port="8081" />
+    </http:listener-config>
+    <apikit:config name="book-my-holidays-exp-api-config" api="resource::4d87dab9-c9c4-42af-a74f-7cac2d1fa2ed:book-my-holidays-exp-api:1.0.3:raml:zip:book-my-holidays-exp-api.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+	<configuration-properties doc:name="Configuration properties" doc:id="c9a8b781-6c7f-4c4c-92c6-ad6e8cd73e2a" file="config.yaml" />
+	<car-booking-process-api:config name="Car_Booking_Process_API_Config" doc:name="Car Booking Process API Config" doc:id="74b98dc1-9533-44bc-8115-1a3edaf80958" property_host="${carsAPI.host}" property_port="${carsAPI.port}" property_protocol="${carsAPI.protocol}" property_basePath="${carsAPI.basePath}"/>
+	<http:request-config name="HTTP_Request_configuration_hotels" doc:name="HTTP Request configuration" doc:id="edd982f5-1a0c-478d-9a56-23c44f71a9db" basePath="${hotelsAPI.basePath}" >
+		<http:request-connection protocol="${hotelsAPI.protocol}" host="${hotelsAPI.host}" port="${hotelsAPI.port}" />
+	</http:request-config>
+		<http:request-config name="HTTP_Request_configuration_flights" doc:name="HTTP Request configuration" doc:id="3d14fd8f-63cd-4f62-9317-2c497ab65dce" basePath="${flight.basePath}">
+		<http:request-connection host="${flight.host}" port="${flight.port}" />
+		<http:default-headers >
+			<http:default-header key="client_id" value="${secure::flight.clientID}" />
+			<http:default-header key="client_secret" value="${secure::flight.clientSecret}" />
+		</http:default-headers>
+	
+</http:request-config>
+	<global-property doc:name="Global Property" doc:id="b5b2cd3a-3c73-49a6-bba8-c650498b439b" name="environment" value="dev" />
+	<json-logger:config name="JSON_Logger_Config" doc:name="JSON Logger Config" doc:id="c795c76d-7d31-4dde-af40-c732e574410c" environment="${environment}" />
+</mule>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:car-booking-process-api="http://www.mulesoft.org/schema/mule/car-booking-process-api" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/car-booking-process-api http://www.mulesoft.org/schema/mule/car-booking-process-api/current/mule-car-booking-process-api.xsd">
+	<flow name="getCarBookingsByEmailSF" doc:id="6742e6ce-46df-4bde-ae4a-4ea7d00ac269" >
+		<car-booking-process-api:get-my-booking-by-email-id doc:name="Get my booking by email id" doc:id="15c7aa20-5bde-4443-8116-a01a246710f3" config-ref="Car_Booking_Process_API_Config" email-id="#[vars.emailId]" client-id="${carsAPI.client_id}" client-secret="${carsAPI.client_secret}"/>
+	</flow>
+</mule>

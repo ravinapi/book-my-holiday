@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<sub-flow name="listHotelBookingSub_Flow" doc:id="4e95a1a8-ae98-4d32-8d2e-a0eb67e0da8f" >
+		<http:request method="GET" doc:name="Request" doc:id="4f2111be-e25a-4428-9bf7-3e6808d6f79e" config-ref="HTTP_Request_configuration_hotels" path="/listAllBookings/{hotelBookingID}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"hotelBookingID" : attributes.uriParams.hotelBookingID
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"emailID" : attributes.queryParams.emailID
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="e88d3063-0be3-4e8b-bfeb-9a6950dfdd4c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+</mule>

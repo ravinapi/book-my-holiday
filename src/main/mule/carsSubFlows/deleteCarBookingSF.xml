@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:car-booking-process-api="http://www.mulesoft.org/schema/mule/car-booking-process-api" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/car-booking-process-api http://www.mulesoft.org/schema/mule/car-booking-process-api/current/mule-car-booking-process-api.xsd">
+	<flow name="deleteCarBookingSF" doc:id="ca91e73a-e713-4bc7-9b06-c82fe402121a" >
+		<car-booking-process-api:delete-booking-by-booking-id doc:name="Delete booking by booking id" doc:id="562fc319-d9fc-409a-8748-31007d992d5a" config-ref="Car_Booking_Process_API_Config" booking-id="#[vars.bookingId]" client-id="${carsAPI.client_id}" client-secret="${carsAPI.client_secret}"/>
+	</flow>
+</mule>

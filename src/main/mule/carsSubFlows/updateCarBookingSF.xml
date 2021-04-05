@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:car-booking-process-api="http://www.mulesoft.org/schema/mule/car-booking-process-api" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/car-booking-process-api http://www.mulesoft.org/schema/mule/car-booking-process-api/current/mule-car-booking-process-api.xsd">
+	<flow name="updateCarBookingSF" doc:id="aceaea26-8cd6-4af3-945b-cffe55d15c95" >
+		<car-booking-process-api:update-booking-by-booking-id doc:name="Update booking by booking id" doc:id="ec81e403-913d-4115-97e6-ed8fc5432b50" config-ref="Car_Booking_Process_API_Config" booking-id="#[vars.bookingId]" client-id="${carsAPI.client_id}" client-secret="${carsAPI.client_secret}"/>
+	</flow>
+</mule>
